@@ -1,0 +1,17 @@
+[
+  {
+    "staff_id": "staff_001",
+    "max_shifts_per_week": 5,
+    "is_active": true
+  },
+  {
+    "staff_id": "staff_002",
+    "max_shifts_per_week": 4,
+    "is_active": true
+  },
+  {
+    "staff_id": "staff_003",
+    "max_shifts_per_week": 5,
+    "is_active": true
+  }
+]

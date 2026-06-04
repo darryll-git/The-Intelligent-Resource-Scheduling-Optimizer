@@ -13,14 +13,17 @@ except Exception:
     def create_client(url, key):
         raise ImportError("Supabase client not available")
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from the project root
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+env_path = os.path.join(ROOT_DIR, '.env')
+load_dotenv(env_path, override=True)
 
 # Parse command‑line arguments
 parser = argparse.ArgumentParser(description="Run scheduling optimizer")
 parser.add_argument("--local", action="store_true", help="Force local mode using JSON files")
 args = parser.parse_args()
 
+# In API context, sys.argv might not have --local, but we should also check the ROOT .env
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 LOCAL_MODE = args.local or not (SUPABASE_URL and SUPABASE_KEY)
@@ -73,11 +76,11 @@ def upload_schedule_local(shift_records):
     except Exception as e:
         print(f"Failed to write schedule locally: {e}")
 
-def solve_and_upload():
+def solve_schedule():
     staff_members = fetch_staff()
     if not staff_members:
         print("No active staff found. Aborting.")
-        return
+        return None
 
     num_staff = len(staff_members)
     num_days = 7  # One‑week schedule
@@ -110,13 +113,44 @@ def solve_and_upload():
             <= max_shifts
         )
 
+    # Constraint 4: At least one Manager per day
+    manager_indices = [s for s, person in enumerate(staff_members) if person.get("role") == "Manager"]
+    if manager_indices:
+        for d in range(num_days):
+            model.Add(sum(shift_vars[(s, d, i)] for s in manager_indices for i in range(num_shifts)) >= 1)
+
+    start_date = datetime.date.today()
+    
+    # Constraint 5: Time Off Requests (Hard Constraint)
+    for s, person in enumerate(staff_members):
+        time_off_dates = person.get("time_off", [])
+        if time_off_dates:
+            for d in range(num_days):
+                current_date_str = (start_date + datetime.timedelta(days=d)).isoformat()
+                if current_date_str in time_off_dates:
+                    for i in range(num_shifts):
+                        model.Add(shift_vars[(s, d, i)] == 0)
+
+    # Soft Constraints: Preferences (Objective Function)
+    objective_terms = []
+    for s, person in enumerate(staff_members):
+        preferences = person.get("preferences", {})
+        for d in range(num_days):
+            current_date_str = (start_date + datetime.timedelta(days=d)).isoformat()
+            if current_date_str in preferences:
+                weight = preferences[current_date_str]
+                for i in range(num_shifts):
+                    objective_terms.append(weight * shift_vars[(s, d, i)])
+                    
+    if objective_terms:
+        model.Maximize(sum(objective_terms))
+
     print("Matrix built. Solving constraints...")
     solver = cp_model.CpSolver()
     status = solver.Solve(model)
 
     if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
-        print("Optimal schedule found! Preparing output...")
-        start_date = datetime.date.today()
+        print("Optimal/Feasible schedule found! Preparing output...")
         shift_records = []
         for d in range(num_days):
             current_date = start_date + datetime.timedelta(days=d)
@@ -141,8 +175,13 @@ def solve_and_upload():
         )
         if not LOCAL_MODE:
             supabase.table("solver_logs").insert({"log_text": log_text}).execute()
+        return shift_records
     else:
         print("Failed: No feasible schedule found with given constraints.")
+        return None
+
+def solve_and_upload():
+    solve_schedule()
 
 if __name__ == "__main__":
     solve_and_upload()

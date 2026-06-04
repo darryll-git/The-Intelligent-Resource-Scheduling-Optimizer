@@ -1,17 +1,33 @@
 [
   {
     "staff_id": "staff_001",
+    "name": "Alice",
+    "role": "Manager",
     "max_shifts_per_week": 5,
-    "is_active": true
+    "is_active": true,
+    "time_off": ["2026-05-30"],
+    "preferences": {
+      "2026-05-31": -10 
+    }
   },
   {
     "staff_id": "staff_002",
-    "max_shifts_per_week": 4,
-    "is_active": true
+    "name": "Bob",
+    "role": "Manager",
+    "max_shifts_per_week": 5,
+    "is_active": true,
+    "time_off": [],
+    "preferences": {
+      "2026-06-01": 10
+    }
   },
   {
     "staff_id": "staff_003",
+    "name": "Charlie",
+    "role": "Regular",
     "max_shifts_per_week": 5,
-    "is_active": true
+    "is_active": true,
+    "time_off": [],
+    "preferences": {}
   }
 ]

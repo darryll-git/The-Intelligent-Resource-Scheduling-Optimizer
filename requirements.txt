@@ -1,3 +1,5 @@
 python-dotenv
 ortools
 supabase
+flask
+flask-cors

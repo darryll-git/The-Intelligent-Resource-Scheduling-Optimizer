@@ -1,0 +1,194 @@
+{
+  "name": "Scheduling Orchestrator",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "schedule-trigger",
+        "httpMethod": "POST",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "name": "Webhook (Frontend Trigger)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://your-flask-backend-url/api/internal/solve",
+        "method": "POST",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "job_id",
+              "value": "={{ $json.body.job_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Call Flask API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        450,
+        300
+      ],
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "value2": "success"
+            }
+          ]
+        }
+      },
+      "name": "Check Success",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://yvwuzfbbwlmayettkdsv.supabase.co/rest/v1/solver_logs",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2d3V6ZmJid2xtYXlldHRrZHN2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MzQ5NTExOCwiZXhwIjoyMDk5MDcxMTE4fQ.TvgzHBOIJYHZq_m4RrD1nnJuarWqPQuaGCWRkRhdTIo"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2d3V6ZmJid2xtYXlldHRrZHN2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MzQ5NTExOCwiZXhwIjoyMDk5MDcxMTE4fQ.TvgzHBOIJYHZq_m4RrD1nnJuarWqPQuaGCWRkRhdTIo"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "log_text",
+              "value": "={{ JSON.stringify({job_id: $node[\"Webhook (Frontend Trigger)\"].json.body.job_id, status: \"completed\", message: \"Optimization completed successfully.\"}) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Supabase: Write Success",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        850,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://yvwuzfbbwlmayettkdsv.supabase.co/rest/v1/solver_logs",
+        "method": "POST",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2d3V6ZmJid2xtYXlldHRrZHN2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MzQ5NTExOCwiZXhwIjoyMDk5MDcxMTE4fQ.TvgzHBOIJYHZq_m4RrD1nnJuarWqPQuaGCWRkRhdTIo"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2d3V6ZmJid2xtYXlldHRrZHN2Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MzQ5NTExOCwiZXhwIjoyMDk5MDcxMTE4fQ.TvgzHBOIJYHZq_m4RrD1nnJuarWqPQuaGCWRkRhdTIo"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "log_text",
+              "value": "={{ JSON.stringify({job_id: $node[\"Webhook (Frontend Trigger)\"].json.body.job_id, status: \"failed\", error_message: $json.error || \"Optimization failed\"}) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Supabase: Write Failure",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [
+        850,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook (Frontend Trigger)": {
+      "main": [
+        [
+          {
+            "node": "Call Flask API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call Flask API": {
+      "main": [
+        [
+          {
+            "node": "Check Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase: Write Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Success": {
+      "main": [
+        [
+          {
+            "node": "Supabase: Write Success",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Supabase: Write Failure",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {}
+}

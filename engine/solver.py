@@ -73,15 +73,20 @@ def upload_schedule_local(shift_records):
     except Exception as e:
         print(f"Failed to write schedule locally: {e}")
 
-def solve_and_upload():
+def solve_and_upload(payload=None):
+    if payload is None:
+        payload = {}
+        
     staff_members = fetch_staff()
     if not staff_members:
         print("No active staff found. Aborting.")
         return
 
     num_staff = len(staff_members)
-    num_days = 7  # One‑week schedule
-    shifts = ["Morning", "Night"]  # Two shifts per day
+    
+    # Dynamic inputs from JSON payload
+    num_days = payload.get("num_days", 7)
+    shifts = payload.get("shifts", ["Morning", "Night"])
     num_shifts = len(shifts)
 
     # Build OR‑Tools model
@@ -104,18 +109,55 @@ def solve_and_upload():
 
     # Constraint 3: Respect max_shifts_per_week from data
     for s, person in enumerate(staff_members):
-        max_shifts = person.get("max_shifts_per_week", 5)
+        max_shifts_per_week = person.get("max_shifts_per_week", 5)
+        # Scale the max limit depending on the dynamic time horizon
+        max_shifts = int(max_shifts_per_week * (num_days / 7.0))
         model.Add(
             sum(shift_vars[(s, d, i)] for d in range(num_days) for i in range(num_shifts))
             <= max_shifts
         )
+        
+    # Phase 2: Soft Constraints & Objective Function
+    penalty_vars = []
+    
+    # Soft Constraint A: Penalize back-to-back shifts (Night followed by Morning next day)
+    night_idx = shifts.index("Night") if "Night" in shifts else -1
+    morning_idx = shifts.index("Morning") if "Morning" in shifts else -1
+    
+    if night_idx != -1 and morning_idx != -1:
+        for s in range(num_staff):
+            for d in range(num_days - 1):
+                b2b_penalty = model.NewBoolVar(f"b2b_s{s}_d{d}")
+                # b2b_penalty must be True if s works Night on day d and Morning on day d+1
+                model.Add(b2b_penalty >= shift_vars[(s, d, night_idx)] + shift_vars[(s, d+1, morning_idx)] - 1)
+                # Assign a heavy penalty weight
+                penalty_vars.append(b2b_penalty * 100)
+                
+    # Soft Constraint B: Penalize uneven shift distributions (Maximize fairness)
+    max_shifts_var = model.NewIntVar(0, num_days * num_shifts, "max_shifts")
+    min_shifts_var = model.NewIntVar(0, num_days * num_shifts, "min_shifts")
+    
+    for s in range(num_staff):
+        total_shifts_s = sum(shift_vars[(s, d, i)] for d in range(num_days) for i in range(num_shifts))
+        model.Add(total_shifts_s <= max_shifts_var)
+        model.Add(total_shifts_s >= min_shifts_var)
+        
+    # The fairness penalty is the difference between the most and least shifts assigned to any staff
+    fairness_diff = model.NewIntVar(0, num_days * num_shifts, "fairness_diff")
+    model.Add(fairness_diff == max_shifts_var - min_shifts_var)
+    penalty_vars.append(fairness_diff * 50)
+    
+    # Set the objective function to minimize total penalties
+    model.Minimize(sum(penalty_vars))
 
     print("Matrix built. Solving constraints...")
     solver = cp_model.CpSolver()
+    # Add a max time limit to prevent infinite searching
+    solver.parameters.max_time_in_seconds = 10.0
     status = solver.Solve(model)
 
     if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
-        print("Optimal schedule found! Preparing output...")
+        print(f"Optimal schedule found! Status: {solver.StatusName(status)}")
         start_date = datetime.date.today()
         shift_records = []
         for d in range(num_days):
@@ -136,8 +178,8 @@ def solve_and_upload():
             print(f"Success! Pushed {len(shift_records)} shifts to 'fact_shifts'.")
         # Log reasoning (simple text)
         log_text = (
-            f"Successfully generated a 7‑day schedule for {num_staff} staff members, "
-            f"filling {num_days * num_shifts} total shifts while respecting maximum shift limits."
+            f"Successfully generated a {num_days}‑day schedule for {num_staff} staff members, "
+            f"filling {num_days * num_shifts} total shifts while optimizing fairness and back-to-back constraints."
         )
         if not LOCAL_MODE:
             supabase.table("solver_logs").insert({"log_text": log_text}).execute()

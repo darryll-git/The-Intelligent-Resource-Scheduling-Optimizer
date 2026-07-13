@@ -77,7 +77,11 @@ def solve_and_upload(payload=None):
     if payload is None:
         payload = {}
         
-    staff_members = fetch_staff()
+    # Dynamic inputs from JSON payload
+    staff_members = payload.get("staff_data")
+    if not staff_members:
+        staff_members = fetch_staff()
+        
     if not staff_members:
         print("No active staff found. Aborting.")
         return
@@ -97,10 +101,11 @@ def solve_and_upload(payload=None):
             for i in range(num_shifts):
                 shift_vars[(s, d, i)] = model.NewBoolVar(f"shift_s{s}_d{d}_i{i}")
 
-    # Constraint 1: Exactly one staff per shift
+    # Constraint 1: Assign a reasonable number of staff per shift based on company size
+    staff_per_shift = max(1, num_staff // 10)
     for d in range(num_days):
         for i in range(num_shifts):
-            model.AddExactlyOne(shift_vars[(s, d, i)] for s in range(num_staff))
+            model.Add(sum(shift_vars[(s, d, i)] for s in range(num_staff)) == staff_per_shift)
 
     # Constraint 2: At most one shift per staff per day
     for s in range(num_staff):
@@ -109,13 +114,27 @@ def solve_and_upload(payload=None):
 
     # Constraint 3: Respect max_shifts_per_week from data
     for s, person in enumerate(staff_members):
-        max_shifts_per_week = person.get("max_shifts_per_week", 5)
+        max_shifts_per_week = int(person.get("max_shifts_per_week", 5))
         # Scale the max limit depending on the dynamic time horizon
         max_shifts = int(max_shifts_per_week * (num_days / 7.0))
         model.Add(
             sum(shift_vars[(s, d, i)] for d in range(num_days) for i in range(num_shifts))
             <= max_shifts
         )
+        
+    # Constraint 4: Vacation Days Hard Constraint
+    start_date = datetime.date.today()
+    for s, person in enumerate(staff_members):
+        vacation_days_raw = person.get("vacation_days")
+        if vacation_days_raw:
+            vacation_days_str = str(vacation_days_raw)
+            vacation_days = vacation_days_str.split(";")
+            for d in range(num_days):
+                current_date = (start_date + datetime.timedelta(days=d)).strftime("%Y-%m-%d")
+                if current_date in vacation_days:
+                    # Staff cannot work on their vacation day
+                    for i in range(num_shifts):
+                        model.Add(shift_vars[(s, d, i)] == 0)
         
     # Phase 2: Soft Constraints & Objective Function
     penalty_vars = []

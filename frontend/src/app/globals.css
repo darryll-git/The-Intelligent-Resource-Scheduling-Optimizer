@@ -111,41 +111,80 @@ body {
   color: #f87171;
 }
 
-.schedule-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
+.table-container {
+  width: 100%;
+  overflow-x: auto;
   margin-top: 32px;
+  border-radius: 16px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
-.shift-card {
-  padding: 20px;
+.schedule-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+
+.schedule-table th,
+.schedule-table td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
+}
+
+.schedule-table th {
+  background: rgba(255, 255, 255, 0.02);
+  font-weight: 600;
+  color: #94a3b8;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.sticky-col {
+  position: sticky;
+  left: 0;
+  background: #151d30; /* solid background for sticky overlap */
+  z-index: 20 !important;
+  border-right: 1px solid rgba(255,255,255,0.1) !important;
+  font-weight: 600;
+  color: #f8fafc;
+  box-shadow: 4px 0 10px rgba(0,0,0,0.2);
+}
+
+.schedule-table tr:hover td {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.shift-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
   transition: transform 0.2s ease;
 }
 
-.shift-card:hover {
-  transform: translateY(-4px);
+.shift-badge:hover {
+  transform: scale(1.05);
 }
 
-.shift-date {
-  font-size: 0.875rem;
-  color: #94a3b8;
-  margin-bottom: 8px;
-}
-
-.shift-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0 0 12px 0;
+.badge-morning {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
   color: white;
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
 }
 
-.staff-badge {
-  display: inline-block;
-  background: rgba(139, 92, 246, 0.2);
-  color: #a78bfa;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.875rem;
-  font-weight: 500;
+.badge-night {
+  background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+  color: white;
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
 }

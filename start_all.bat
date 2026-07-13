@@ -9,7 +9,7 @@ start "Flask Backend" cmd /k "python engine\app.py"
 
 echo.
 echo [2/3] Starting n8n Orchestrator (Port 5678)...
-start "n8n" cmd /k "npx n8n"
+start "n8n" cmd /k "set N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=false && npx -y n8n"
 
 echo.
 echo [3/3] Starting Next.js Frontend (Port 3000)...
@@ -25,4 +25,3 @@ echo - Next.js Frontend will be on http://localhost:3000
 echo.
 echo NOTE: Since you are using the real n8n, make sure you open http://localhost:5678, import the n8n/orchestrator_workflow.json blueprint, add your Supabase credentials, and set the workflow to 'Active' before generating a schedule!
 echo =======================================================
-pause

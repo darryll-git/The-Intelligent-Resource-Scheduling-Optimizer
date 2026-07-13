@@ -63,8 +63,8 @@ def get_shifts():
                     return jsonify(json.load(f)), 200
             return jsonify([]), 200
         else:
-            # Fetch the latest 14 shifts from Supabase
-            response = supabase.table("fact_shifts").select("*").order("created_at", desc=True).limit(14).execute()
+            # Fetch up to 1000 shifts from Supabase
+            response = supabase.table("fact_shifts").select("*").order("created_at", desc=True).limit(1000).execute()
             # The data is sorted descending by created_at, but we might want them in order of shift_date
             sorted_data = sorted(response.data, key=lambda x: (x.get('shift_date', ''), x.get('shift_type', '')))
             return jsonify(sorted_data), 200

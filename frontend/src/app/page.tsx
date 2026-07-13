@@ -11,6 +11,15 @@ export default function Home() {
   // Custom hook replaces polling and instantly mutates local React state
   const { schedule, jobStatus } = useScheduleSubscription(jobId);
 
+  // Derive unique dates and staff for the matrix view
+  const uniqueDates = Array.from(new Set(schedule.map((s: any) => s.shift_date.split('T')[0]))).sort() as string[];
+  const uniqueStaff = Array.from(new Set(schedule.map((s: any) => s.staff_id))).sort() as string[];
+
+  // Helper to get shift for a specific staff and date
+  const getShift = (staffId: string, date: string) => {
+    return schedule.find((s: any) => s.staff_id === staffId && s.shift_date.startsWith(date));
+  };
+
   // Listen to realtime updates from the hook
   useEffect(() => {
     if (jobStatus) {
@@ -18,7 +27,12 @@ export default function Home() {
       if (jobStatus.status === 'completed' || jobStatus.status === 'failed') {
         setStatus(jobStatus.status);
       }
-      setMessage(jobStatus.message || jobStatus.error_message || '');
+      
+      let msg = jobStatus.message || jobStatus.error_message || '';
+      if (typeof msg === 'object') {
+          msg = msg.message || JSON.stringify(msg);
+      }
+      setMessage(msg);
     }
   }, [jobStatus]);
 
@@ -98,20 +112,42 @@ export default function Home() {
       </div>
 
       {schedule.length > 0 && (
-        <div style={{ marginTop: '48px' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px' }}>Generated Schedule (Real-Time)</h2>
-          <div className="schedule-grid">
-            {schedule.map((shift, idx) => (
-              <div key={idx} className="glass shift-card">
-                <div className="shift-date">
-                  {new Date(shift.shift_date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
-                </div>
-                <h3 className="shift-title">{shift.shift_type} Shift</h3>
-                <div className="staff-badge">
-                  {shift.staff_id}
-                </div>
-              </div>
-            ))}
+        <div style={{ marginTop: '48px', width: '100%' }}>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px', textAlign: 'center' }}>Generated Schedule Matrix</h2>
+          <div className="table-container">
+            <table className="schedule-table">
+              <thead>
+                <tr>
+                  <th className="sticky-col" style={{ width: '150px' }}>Staff ID</th>
+                  {uniqueDates.map(date => (
+                    <th key={date} style={{ textAlign: 'center' }}>
+                      {new Date(date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {uniqueStaff.map(staffId => (
+                  <tr key={staffId}>
+                    <td className="sticky-col">{staffId}</td>
+                    {uniqueDates.map(date => {
+                      const shift = getShift(staffId, date);
+                      return (
+                        <td key={date} style={{ textAlign: 'center' }}>
+                          {shift ? (
+                            <span className={`shift-badge badge-${shift.shift_type.toLowerCase()}`}>
+                              {shift.shift_type}
+                            </span>
+                          ) : (
+                            <span style={{ color: 'rgba(255,255,255,0.2)' }}>-</span>
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       )}

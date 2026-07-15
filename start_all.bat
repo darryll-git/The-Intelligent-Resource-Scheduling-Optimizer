@@ -5,11 +5,11 @@ echo =======================================================
 
 echo.
 echo [1/3] Starting Flask Backend (Port 5000)...
-start "Flask Backend" cmd /k "python engine\app.py"
+start "Flask Backend" cmd /k "cd engine && python app.py"
 
 echo.
 echo [2/3] Starting n8n Orchestrator (Port 5678)...
-start "n8n" cmd /k "set N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=false && npx -y n8n"
+start "n8n" cmd /k "set N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=false && n8n"
 
 echo.
 echo [3/3] Starting Next.js Frontend (Port 3000)...

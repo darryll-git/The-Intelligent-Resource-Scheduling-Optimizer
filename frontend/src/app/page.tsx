@@ -8,16 +8,22 @@ export default function Home() {
   const [status, setStatus] = useState<'idle' | 'queued' | 'running' | 'completed' | 'failed'>('idle');
   const [message, setMessage] = useState<string>('');
   
+  const [targetMonth, setTargetMonth] = useState<number>(new Date().getMonth() + 1);
+  const [targetYear, setTargetYear] = useState<number>(new Date().getFullYear());
+  
   // Custom hook replaces polling and instantly mutates local React state
-  const { schedule, jobStatus } = useScheduleSubscription(jobId);
+  const { schedule, jobStatus } = useScheduleSubscription(jobId, targetMonth, targetYear);
 
   // Derive unique dates and staff for the matrix view
   const uniqueDates = Array.from(new Set(schedule.map((s: any) => s.shift_date.split('T')[0]))).sort() as string[];
-  const uniqueStaff = Array.from(new Set(schedule.map((s: any) => s.staff_id))).sort() as string[];
+  // Pre-define shift types for the Y-axis
+  const shiftTypes = ['morning', 'afternoon', 'evening', 'night'];
 
-  // Helper to get shift for a specific staff and date
-  const getShift = (staffId: string, date: string) => {
-    return schedule.find((s: any) => s.staff_id === staffId && s.shift_date.startsWith(date));
+  // Helper to get ALL staff assigned to a specific shift type and date
+  const getStaffForShift = (shiftType: string, date: string) => {
+    return schedule
+      .filter((s: any) => s.shift_type.toLowerCase() === shiftType && s.shift_date.startsWith(date))
+      .map((s: any) => s.staff_id);
   };
 
   // Listen to realtime updates from the hook
@@ -39,14 +45,19 @@ export default function Home() {
   const triggerSchedule = async () => {
     try {
       setStatus('queued');
+      
+      const daysInMonth = new Date(targetYear, targetMonth, 0).getDate();
+      const payload = {
+        month: targetMonth,
+        year: targetYear,
+        days_in_month: daysInMonth
+      };
+
       // POST to the Phase 1 refactored synchronous-trigger endpoint
       const res = await fetch('http://localhost:5000/api/schedule', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            num_days: 7,
-            shifts: ["Morning", "Night"]
-        })
+        body: JSON.stringify(payload)
       });
       const data = await res.json();
       
@@ -61,8 +72,7 @@ export default function Home() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 job_id: data.job_id,
-                num_days: 7,
-                shifts: ["Morning", "Night"]
+                ...payload
             })
         }).catch(err => console.error("Webhook trigger failed:", err));
 
@@ -89,6 +99,28 @@ export default function Home() {
       </header>
 
       <div className="glass" style={{ padding: '32px', textAlign: 'center' }}>
+        <div style={{ marginBottom: '24px', display: 'flex', gap: '16px', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+            <label style={{ fontSize: '0.875rem', color: '#94a3b8', marginBottom: '4px' }}>Month (1-12)</label>
+            <input 
+              type="number" 
+              min="1" max="12"
+              value={targetMonth} 
+              onChange={e => setTargetMonth(parseInt(e.target.value) || 1)}
+              style={{ padding: '8px 12px', borderRadius: '6px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', width: '120px' }}
+            />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', textAlign: 'left' }}>
+            <label style={{ fontSize: '0.875rem', color: '#94a3b8', marginBottom: '4px' }}>Year</label>
+            <input 
+              type="number" 
+              value={targetYear} 
+              onChange={e => setTargetYear(parseInt(e.target.value) || 2026)}
+              style={{ padding: '8px 12px', borderRadius: '6px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: 'white', width: '120px' }}
+            />
+          </div>
+        </div>
+
         <button 
           className="btn" 
           onClick={triggerSchedule}
@@ -97,7 +129,7 @@ export default function Home() {
           {(status === 'queued' || status === 'running') ? (
             <><span className="loading-spinner"></span> Optimizing...</>
           ) : (
-            'Generate Schedule'
+            'Generate Monthly Schedule'
           )}
         </button>
 
@@ -111,14 +143,14 @@ export default function Home() {
         )}
       </div>
 
-      {schedule.length > 0 && (
+      {schedule.length > 0 ? (
         <div style={{ marginTop: '48px', width: '100%' }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '24px', textAlign: 'center' }}>Generated Schedule Matrix</h2>
           <div className="table-container">
             <table className="schedule-table">
               <thead>
                 <tr>
-                  <th className="sticky-col" style={{ width: '150px' }}>Staff ID</th>
+                  <th className="sticky-col" style={{ width: '150px' }}>Shift Period</th>
                   {uniqueDates.map(date => (
                     <th key={date} style={{ textAlign: 'center' }}>
                       {new Date(date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
@@ -127,17 +159,25 @@ export default function Home() {
                 </tr>
               </thead>
               <tbody>
-                {uniqueStaff.map(staffId => (
-                  <tr key={staffId}>
-                    <td className="sticky-col">{staffId}</td>
+                {shiftTypes.map(shiftType => (
+                  <tr key={shiftType}>
+                    <td className="sticky-col">
+                      <span className={`shift-badge badge-${shiftType}`}>
+                        {shiftType.toUpperCase()}
+                      </span>
+                    </td>
                     {uniqueDates.map(date => {
-                      const shift = getShift(staffId, date);
+                      const staffList = getStaffForShift(shiftType, date);
                       return (
-                        <td key={date} style={{ textAlign: 'center' }}>
-                          {shift ? (
-                            <span className={`shift-badge badge-${shift.shift_type.toLowerCase()}`}>
-                              {shift.shift_type}
-                            </span>
+                        <td key={date} style={{ textAlign: 'center', verticalAlign: 'top', padding: '12px 8px' }}>
+                          {staffList.length > 0 ? (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'center' }}>
+                              {staffList.map((staffId: string) => (
+                                <span key={staffId} style={{ fontSize: '0.85rem', fontWeight: 600, color: '#f8fafc', background: 'rgba(255,255,255,0.08)', padding: '4px 8px', borderRadius: '4px', whiteSpace: 'nowrap' }}>
+                                  {staffId}
+                                </span>
+                              ))}
+                            </div>
                           ) : (
                             <span style={{ color: 'rgba(255,255,255,0.2)' }}>-</span>
                           )}
@@ -149,6 +189,11 @@ export default function Home() {
               </tbody>
             </table>
           </div>
+        </div>
+      ) : (
+        <div style={{ marginTop: '48px', width: '100%', textAlign: 'center', color: '#94a3b8' }}>
+          <p style={{ fontSize: '1.125rem' }}>No schedule found for this month.</p>
+          <p style={{ fontSize: '0.875rem', opacity: 0.7 }}>Click "Generate Monthly Schedule" to generate one!</p>
         </div>
       )}
     </main>

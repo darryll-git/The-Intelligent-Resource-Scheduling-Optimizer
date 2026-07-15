@@ -20,25 +20,31 @@ export type SolverLog = {
   error_message?: string;
 };
 
-export const useScheduleSubscription = (jobId: string | null) => {
+export const useScheduleSubscription = (jobId: string | null, targetMonth: number, targetYear: number) => {
   const [schedule, setSchedule] = useState<Shift[]>([]);
   const [jobStatus, setJobStatus] = useState<SolverLog | null>(null);
 
-  // Fetch initial schedule on mount
+  // Fetch initial schedule on mount and when month/year changes
   useEffect(() => {
     const fetchInitial = async () => {
+      const startDateStr = `${targetYear}-${String(targetMonth).padStart(2, '0')}-01`;
+      const daysInMonth = new Date(targetYear, targetMonth, 0).getDate();
+      const endDateStr = `${targetYear}-${String(targetMonth).padStart(2, '0')}-${daysInMonth}`;
+
       const { data } = await supabase
         .from('fact_shifts')
         .select('*')
-        .order('created_at', { ascending: false })
-        .limit(14);
+        .gte('shift_date', startDateStr)
+        .lte('shift_date', endDateStr)
+        .order('shift_date', { ascending: true })
+        .limit(1000);
         
       if (data) setSchedule(data as Shift[]);
     };
     if (supabaseUrl && supabaseKey) {
         fetchInitial();
     }
-  }, []);
+  }, [targetMonth, targetYear]);
 
   useEffect(() => {
     if (!supabaseUrl || !supabaseKey) return;
@@ -87,7 +93,7 @@ export const useScheduleSubscription = (jobId: string | null) => {
         { event: 'INSERT', schema: 'public', table: 'fact_shifts' },
         (payload) => {
           // Instantly mutate state with the new shift (React state triggers re-render)
-          setSchedule((prev) => [payload.new as Shift, ...prev].slice(0, 14));
+          setSchedule((prev) => [payload.new as Shift, ...prev].slice(0, 1000));
         }
       )
       .subscribe();

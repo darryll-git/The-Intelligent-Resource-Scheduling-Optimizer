@@ -79,5 +79,5 @@ def webhook():
     return jsonify({"success": True}), 200
 
 if __name__ == "__main__":
-    print("Starting Mock n8n Orchestrator on port 5001...")
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    print("Starting Mock n8n Orchestrator on port 5678...")
+    app.run(host="0.0.0.0", port=5678, debug=True)

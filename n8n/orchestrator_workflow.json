@@ -28,8 +28,16 @@
               "value": "={{ $json.body.job_id }}"
             },
             {
-              "name": "staff_data",
-              "value": "={{ $json.staff_data }}"
+              "name": "month",
+              "value": "={{ $json.body.month }}"
+            },
+            {
+              "name": "year",
+              "value": "={{ $json.body.year }}"
+            },
+            {
+              "name": "days_in_month",
+              "value": "={{ $json.body.days_in_month }}"
             }
           ]
         },
@@ -39,7 +47,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 3,
       "position": [
-        800,
+        600,
         300
       ],
       "onError": "continueErrorOutput"
@@ -142,45 +150,6 @@
         1200,
         400
       ]
-    },
-    {
-      "parameters": {
-        "operation": "read",
-        "fileSelector": "C:/Users/darry/.n8n-files/staff_roster.csv"
-      },
-      "name": "Read CSV",
-      "type": "n8n-nodes-base.readWriteFile",
-      "typeVersion": 1,
-      "position": [
-        350,
-        300
-      ]
-    },
-    {
-      "parameters": {
-        "operation": "fromFile",
-        "binaryPropertyName": "data",
-        "options": {}
-      },
-      "name": "Extract CSV",
-      "type": "n8n-nodes-base.spreadsheetFile",
-      "typeVersion": 1,
-      "position": [
-        500,
-        300
-      ]
-    },
-    {
-      "parameters": {
-        "jsCode": "const staff = $input.all().map(i => i.json);\nconst webhookData = $('Webhook (Frontend Trigger)').first().json.body;\nreturn [{ json: { body: webhookData, staff_data: staff } }];"
-      },
-      "name": "Aggregate",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        650,
-        300
-      ]
     }
   ],
   "connections": {
@@ -188,7 +157,7 @@
       "main": [
         [
           {
-            "node": "Read CSV",
+            "node": "Call Flask API",
             "type": "main",
             "index": 0
           }
@@ -225,39 +194,6 @@
         [
           {
             "node": "Supabase: Write Failure",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Read CSV": {
-      "main": [
-        [
-          {
-            "node": "Extract CSV",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract CSV": {
-      "main": [
-        [
-          {
-            "node": "Aggregate",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Aggregate": {
-      "main": [
-        [
-          {
-            "node": "Call Flask API",
             "type": "main",
             "index": 0
           }

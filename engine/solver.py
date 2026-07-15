@@ -51,9 +51,15 @@ def fetch_staff():
         print(f"Loaded {len(data)} staff records from local JSON.")
         return data
     else:
-        print("Fetching staff constraints from Supabase...")
-        response = supabase.table("dim_staff").select("*").eq("is_active", True).execute()
-        return response.data
+        print("Fetching staff constraints and preferences from Supabase...")
+        response = supabase.table("dim_staff").select("*, staff_preferences(*)").eq("is_active", True).execute()
+        
+        # staff_preferences will be mapped to "preferences" list in the solver logic
+        data = response.data
+        for person in data:
+            if "staff_preferences" in person:
+                person["preferences"] = person.pop("staff_preferences")
+        return data
 
 def upload_schedule_local(shift_records):
     """Write schedule to a JSON file in local mode."""
@@ -88,9 +94,13 @@ def solve_and_upload(payload=None):
 
     num_staff = len(staff_members)
     
-    # Dynamic inputs from JSON payload
-    num_days = payload.get("num_days", 7)
-    shifts = payload.get("shifts", ["Morning", "Night"])
+    # Extract month/year/days from payload
+    num_days = payload.get("days_in_month", 31)
+    target_month = payload.get("month", datetime.date.today().month)
+    target_year = payload.get("year", datetime.date.today().year)
+    
+    # 4 explicit shift types
+    shifts = ["morning", "afternoon", "evening", "night"]
     num_shifts = len(shifts)
 
     # Build OR‑Tools model
@@ -101,8 +111,8 @@ def solve_and_upload(payload=None):
             for i in range(num_shifts):
                 shift_vars[(s, d, i)] = model.NewBoolVar(f"shift_s{s}_d{d}_i{i}")
 
-    # Constraint 1: Assign a reasonable number of staff per shift based on company size
-    staff_per_shift = max(1, num_staff // 10)
+    # Constraint 1: Exactly 2 staff per shift
+    staff_per_shift = 2
     for d in range(num_days):
         for i in range(num_shifts):
             model.Add(sum(shift_vars[(s, d, i)] for s in range(num_staff)) == staff_per_shift)
@@ -112,72 +122,69 @@ def solve_and_upload(payload=None):
         for d in range(num_days):
             model.AddAtMostOne(shift_vars[(s, d, i)] for i in range(num_shifts))
 
-    # Constraint 3: Respect max_shifts_per_week from data
+    # Constraint 3: Respect max_shifts_per_month from data
     for s, person in enumerate(staff_members):
-        max_shifts_per_week = int(person.get("max_shifts_per_week", 5))
-        # Scale the max limit depending on the dynamic time horizon
-        max_shifts = int(max_shifts_per_week * (num_days / 7.0))
+        max_shifts = int(person.get("max_shifts_per_month", 20))
         model.Add(
             sum(shift_vars[(s, d, i)] for d in range(num_days) for i in range(num_shifts))
             <= max_shifts
         )
         
-    # Constraint 4: Vacation Days Hard Constraint
-    start_date = datetime.date.today()
-    for s, person in enumerate(staff_members):
-        vacation_days_raw = person.get("vacation_days")
-        if vacation_days_raw:
-            vacation_days_str = str(vacation_days_raw)
-            vacation_days = vacation_days_str.split(";")
-            for d in range(num_days):
-                current_date = (start_date + datetime.timedelta(days=d)).strftime("%Y-%m-%d")
-                if current_date in vacation_days:
-                    # Staff cannot work on their vacation day
-                    for i in range(num_shifts):
-                        model.Add(shift_vars[(s, d, i)] == 0)
-        
-    # Phase 2: Soft Constraints & Objective Function
-    penalty_vars = []
-    
-    # Soft Constraint A: Penalize back-to-back shifts (Night followed by Morning next day)
-    night_idx = shifts.index("Night") if "Night" in shifts else -1
-    morning_idx = shifts.index("Morning") if "Morning" in shifts else -1
-    
-    if night_idx != -1 and morning_idx != -1:
-        for s in range(num_staff):
-            for d in range(num_days - 1):
-                b2b_penalty = model.NewBoolVar(f"b2b_s{s}_d{d}")
-                # b2b_penalty must be True if s works Night on day d and Morning on day d+1
-                model.Add(b2b_penalty >= shift_vars[(s, d, night_idx)] + shift_vars[(s, d+1, morning_idx)] - 1)
-                # Assign a heavy penalty weight
-                penalty_vars.append(b2b_penalty * 100)
-                
-    # Soft Constraint B: Penalize uneven shift distributions (Maximize fairness)
-    max_shifts_var = model.NewIntVar(0, num_days * num_shifts, "max_shifts")
-    min_shifts_var = model.NewIntVar(0, num_days * num_shifts, "min_shifts")
-    
+    # Constraint 4: Ergonomic Rest Period (No Night -> Morning)
+    night_idx = shifts.index("night")
+    morning_idx = shifts.index("morning")
     for s in range(num_staff):
-        total_shifts_s = sum(shift_vars[(s, d, i)] for d in range(num_days) for i in range(num_shifts))
-        model.Add(total_shifts_s <= max_shifts_var)
-        model.Add(total_shifts_s >= min_shifts_var)
+        for d in range(num_days - 1):
+            model.Add(shift_vars[(s, d, night_idx)] + shift_vars[(s, d+1, morning_idx)] <= 1)
         
-    # The fairness penalty is the difference between the most and least shifts assigned to any staff
-    fairness_diff = model.NewIntVar(0, num_days * num_shifts, "fairness_diff")
-    model.Add(fairness_diff == max_shifts_var - min_shifts_var)
-    penalty_vars.append(fairness_diff * 50)
+    # Objective Function: Balance Preference Matching against Fairness/Rotation
+    W_pref = 100
+    W_fairness = 10
     
-    # Set the objective function to minimize total penalties
-    model.Minimize(sum(penalty_vars))
+    objective_terms = []
+    for s, person in enumerate(staff_members):
+        # Default historical counts
+        hist_counts = person.get("historical_shift_counts", {})
+        if not hist_counts or isinstance(hist_counts, str):
+            try:
+                if isinstance(hist_counts, str):
+                    hist_counts = json.loads(hist_counts)
+                else:
+                    hist_counts = {}
+            except Exception:
+                hist_counts = {}
+                
+        # Map preferences
+        prefs = person.get("preferences", [])
+        pref_map = {p.get("preferred_shift_type") or p.get("shift_type"): p.get("weight", 1) or p.get("preference_weight", 1) for p in prefs if isinstance(p, dict)}
+        
+        for i, shift_name in enumerate(shifts):
+            # historical count
+            h_is = int(hist_counts.get(shift_name, 0))
+            # preference
+            p_is = int(pref_map.get(shift_name, 0))
+            
+            coeff = (W_pref * p_is) - (W_fairness * h_is)
+            for d in range(num_days):
+                objective_terms.append(coeff * shift_vars[(s, d, i)])
+                
+    # We want to maximize the score
+    model.Maximize(sum(objective_terms))
 
     print("Matrix built. Solving constraints...")
     solver = cp_model.CpSolver()
     # Add a max time limit to prevent infinite searching
-    solver.parameters.max_time_in_seconds = 10.0
+    solver.parameters.max_time_in_seconds = 30.0
     status = solver.Solve(model)
 
     if status in (cp_model.OPTIMAL, cp_model.FEASIBLE):
         print(f"Optimal schedule found! Status: {solver.StatusName(status)}")
-        start_date = datetime.date.today()
+        # Construct exact dates using target_year and target_month
+        try:
+            start_date = datetime.date(target_year, target_month, 1)
+        except ValueError:
+            start_date = datetime.date.today()
+            
         shift_records = []
         for d in range(num_days):
             current_date = start_date + datetime.timedelta(days=d)
@@ -193,12 +200,18 @@ def solve_and_upload(payload=None):
         if LOCAL_MODE:
             upload_schedule_local(shift_records)
         else:
+            # Delete existing unlocked shifts for the month to prevent duplicates
+            start_date_str = start_date.isoformat()
+            end_date_str = (start_date + datetime.timedelta(days=num_days)).isoformat()
+            supabase.table("fact_shifts").delete().gte("shift_date", start_date_str).lt("shift_date", end_date_str).eq("is_locked", False).execute()
+            
             supabase.table("fact_shifts").insert(shift_records).execute()
             print(f"Success! Pushed {len(shift_records)} shifts to 'fact_shifts'.")
+            
         # Log reasoning (simple text)
         log_text = (
-            f"Successfully generated a {num_days}‑day schedule for {num_staff} staff members, "
-            f"filling {num_days * num_shifts} total shifts while optimizing fairness and back-to-back constraints."
+            f"Successfully generated a {num_days}‑day monthly schedule for {target_year}-{target_month:02d} "
+            f"with {num_staff} staff members, balancing preferences and historical fairness."
         )
         if not LOCAL_MODE:
             supabase.table("solver_logs").insert({"log_text": log_text}).execute()

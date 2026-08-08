@@ -1,32 +1,85 @@
 import os
 import uuid
+import threading
+import requests
+from functools import wraps
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from solver import solve_and_upload
-
+from models import ScheduleRequestPayload, get_default_shifts
+from pydantic import ValidationError
 app = Flask(__name__)
 CORS(app) # Enable CORS for frontend communication
 
+API_SECRET_KEY = os.getenv("API_SECRET_KEY", "super-secret-local-key")
+
+def require_api_key(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        key = request.headers.get("X-API-Key")
+        if key and key == API_SECRET_KEY:
+            return f(*args, **kwargs)
+        return jsonify({"error": "Unauthorized", "message": "Invalid or missing API key"}), 401
+    return decorated_function
+
 @app.route("/api/schedule", methods=["POST"])
+@require_api_key
 def trigger_schedule():
     """
-    Endpoint to trigger the scheduling engine.
-    Now instantly returns 202 Accepted. The actual orchestration 
-    is handed off to n8n which will call /api/internal/solve.
+    Endpoint to trigger the scheduling engine asynchronously.
+    Returns 202 Accepted. The solver runs in the background and calls the webhook on completion.
     """
     payload = request.json or {}
+    try:
+        validated_payload = ScheduleRequestPayload(**payload)
+        if not validated_payload.shifts:
+            validated_payload.shifts = get_default_shifts()
+        valid_dict = validated_payload.model_dump() if hasattr(validated_payload, "model_dump") else validated_payload.dict()
+    except ValidationError as ve:
+        return jsonify({
+            "status": "failed",
+            "error": "Validation Error",
+            "details": ve.errors()
+        }), 400
+
     job_id = str(uuid.uuid4())
+    webhook_url = getattr(validated_payload, 'webhook_url', None)
     
-    # In a fully decoupled architecture, the frontend might call the n8n webhook directly 
-    # and bypass this, or this endpoint could forward the request to n8n.
-    # For now, we simply validate the request and return a 202 as requested.
+    # Start the background task
+    threading.Thread(target=run_solver_async, args=(valid_dict, job_id, webhook_url)).start()
+    
     return jsonify({
         "job_id": job_id, 
         "status": "accepted",
-        "message": "Job accepted. Orchestration will be handled by n8n."
+        "message": "Job accepted. Optimization is running in the background."
     }), 202
 
+def run_solver_async(payload, job_id, webhook_url):
+    try:
+        print(f"[Async Job {job_id}] Starting solver in background...")
+        result = solve_and_upload(payload, job_id=job_id)
+        
+        if webhook_url:
+            print(f"[Async Job {job_id}] Solver finished. Firing webhook to {webhook_url}")
+            requests.post(webhook_url, json={
+                "job_id": job_id,
+                "status": result.get("status", "unknown") if result else "unknown",
+                "details": result.get("message", "") if result else ""
+            }, timeout=10)
+    except Exception as e:
+        print(f"[Async Job {job_id}] Unhandled exception in background thread: {e}")
+        if webhook_url:
+            try:
+                requests.post(webhook_url, json={
+                    "job_id": job_id,
+                    "status": "failed",
+                    "details": str(e)
+                }, timeout=10)
+            except Exception as webhook_e:
+                print(f"[Async Job {job_id}] Failed to fire error webhook: {webhook_e}")
+
 @app.route("/api/internal/solve", methods=["POST"])
+@require_api_key
 def internal_solve():
     """
     Synchronous endpoint called by the n8n orchestrator.
@@ -36,8 +89,20 @@ def internal_solve():
         # Pass payload to solver if needed in the future
         payload = request.json or {}
         
+        try:
+            validated_payload = ScheduleRequestPayload(**payload)
+            if not validated_payload.shifts:
+                validated_payload.shifts = get_default_shifts()
+            valid_dict = validated_payload.model_dump() if hasattr(validated_payload, "model_dump") else validated_payload.dict()
+        except ValidationError as ve:
+            return jsonify({
+                "status": "failed",
+                "error": "Validation Error",
+                "details": ve.errors()
+            }), 400
+        
         # Synchronously execute the solver
-        solve_and_upload(payload)
+        solve_and_upload(valid_dict)
         
         return jsonify({
             "status": "success",
@@ -50,6 +115,7 @@ def internal_solve():
         }), 500
 
 @app.route("/api/shifts", methods=["GET"])
+@require_api_key
 def get_shifts():
     """Fetch the latest schedule from Supabase (or local JSON)."""
     try:

@@ -33,68 +33,118 @@ class AgentState(TypedDict):
 
 # Initialize LLM (Gemini)
 # Requires GOOGLE_API_KEY in .env
-llm = ChatGoogleGenerativeAI(model="gemini-1.5-pro", temperature=0)
+llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
 
 def analyze_query(state: AgentState):
-    """Analyzes the user's query to determine what aspect of the schedule they are asking about."""
+    """Analyzes the user's query to extract the intent and target entities."""
     messages = state["messages"]
     last_message = messages[-1].content
     
-    prompt = f"Analyze this user query about a schedule and determine the core intent (e.g., questioning fairness, back-to-back shifts, or asking about a specific person). Query: {last_message}"
+    prompt = f"""
+    Analyze the following user query about a schedule. Extract the core intent and any specific entities mentioned.
+    Return ONLY a valid JSON object with these keys (use null if not mentioned):
+    - "intent": brief description of what they want to know
+    - "target_staff_name": name of the staff member
+    - "target_shift_type": shift type (e.g., Morning, Night)
+    - "target_date": specific date mentioned
+
+    Query: {last_message}
+    """
     
     response = llm.invoke([HumanMessage(content=prompt)])
-    return {"query_intent": response.content}
+    
+    # Clean the response to ensure it's valid JSON
+    content = response.content.replace("```json", "").replace("```", "").strip()
+    try:
+        parsed_intent = json.loads(content)
+        intent_str = json.dumps(parsed_intent)
+    except Exception as e:
+        intent_str = json.dumps({"intent": content, "target_staff_name": None, "target_shift_type": None, "target_date": None})
+        
+    return {"query_intent": intent_str}
 
 def retrieve_constraints(state: AgentState):
-    """Retrieves schedule data and solver logs to provide context for the reasoning."""
-    context = ""
+    """Filters schedule data based on extracted entities and attaches a rule manifest."""
+    try:
+        query_data = json.loads(state["query_intent"])
+    except:
+        query_data = {}
+        
+    target_staff = query_data.get("target_staff_name")
+    
+    rule_manifest = """
+    ACTIVE SOLVER RULES (Rule Manifest):
+    1. HARD: Exactly 2 staff members assigned per shift.
+    2. HARD: Maximum 1 shift per day per staff member.
+    3. HARD: Cannot work a Morning shift immediately following a Night shift.
+    4. HARD: Honors maximum shifts per month for each staff member.
+    5. HARD: Requires specific skills if defined for a shift type.
+    6. HARD: Respects approved unavailability blocks.
+    7. SOFT (Objective): Maximizes schedule score based on preference weights vs historical fairness count.
+    """
+
+    context = f"{rule_manifest}\n\nFiltered Context:\n"
+    
     if LOCAL_MODE:
         base_dir = os.path.dirname(__file__)
         schedule_path = os.path.join(base_dir, "schedule_output.json")
         staff_path = os.path.join(base_dir, "staff_data.json")
         
-        schedule_data = []
-        staff_data = []
-        
         if os.path.exists(schedule_path):
             with open(schedule_path, "r", encoding="utf-8") as f:
                 schedule_data = json.load(f)
+            
+            # Filter schedule data if a target staff member was identified
+            if target_staff:
+                target_staff_lower = target_staff.lower()
+                schedule_data = [s for s in schedule_data if target_staff_lower in str(s.get("staff_id", "")).lower()]
+                context += f"Shifts involving {target_staff}:\n{json.dumps(schedule_data, indent=2)}\n"
+            else:
+                context += f"Sample Shifts:\n{json.dumps(schedule_data[:5], indent=2)}... (truncated)\n"
+                
         if os.path.exists(staff_path):
             with open(staff_path, "r", encoding="utf-8") as f:
                 staff_data = json.load(f)
                 
-        # Only take a snippet if it's too large, but for constraints logic, full data is better.
-        context = f"Local Schedule Data: {schedule_data}\nStaff Data: {staff_data}"
+            if target_staff:
+                target_staff_lower = target_staff.lower()
+                staff_data = [s for s in staff_data if target_staff_lower in s.get("name", "").lower() or target_staff_lower in s.get("staff_id", "").lower()]
+                context += f"\nStaff Preferences for {target_staff}:\n{json.dumps(staff_data, indent=2)}\n"
     else:
         try:
+            # In a real app we would use SQL filters here based on target_staff
             shifts = supabase.table("fact_shifts").select("*").limit(50).execute().data
-            logs = supabase.table("solver_logs").select("*").order("created_at", desc=True).limit(5).execute().data
-            staff = supabase.table("dim_staff").select("*").execute().data
-            context = f"Recent Shifts: {shifts}\nRecent Solver Logs: {logs}\nStaff Data: {staff}"
+            logs = supabase.table("solver_logs").select("*").order("created_at", desc=True).limit(2).execute().data
+            context += f"Recent Shifts: {shifts}\nRecent Solver Logs: {logs}\n"
         except Exception as e:
-            context = f"Failed to retrieve data from Supabase: {e}"
+            context += f"Failed to retrieve data from Supabase: {e}"
             
     return {"constraints_context": context}
 
 def evaluate_logic(state: AgentState):
     """Evaluates the mathematical/logical constraints that forced a decision."""
-    intent = state.get("query_intent", "")
+    try:
+        intent_data = json.loads(state.get("query_intent", "{}"))
+        intent_desc = intent_data.get("intent", "Unknown")
+    except:
+        intent_desc = state.get("query_intent", "")
+        
     context = state.get("constraints_context", "")
     user_query = state["messages"][-1].content
     
     prompt = f"""
     You are an expert operations researcher analyzing an OR-Tools CP-SAT scheduling model. 
-    Based on the following schedule constraints, staff limits, and output logs, 
-    mathematically explain why the solver made the decisions relevant to the user's query.
+    Based on the Rule Manifest and the filtered data context provided, 
+    explain why the solver made the decisions relevant to the user query.
     
     User Query: {user_query}
-    Query Intent: {intent}
+    Query Intent: {intent_desc}
+    
     System Context / Output Logs: 
     {context}
     
-    Explain the CP-SAT constraint logic (e.g., boolean implications for back-to-back penalties, 
-    integer boundaries for max shifts per week, or variables minimizing variance for fairness). 
-    Identify specifically which mathematical constraint or penalty forced this outcome.
+    Use the explicit rules defined in the Rule Manifest to justify the scheduling decision. 
+    Explain which specific rule or combination of rules (e.g. max shifts per day, back-to-back constraints, or preference maximization) led to this outcome for the queried staff member.
     """
     
     response = llm.invoke([SystemMessage(content=prompt)])

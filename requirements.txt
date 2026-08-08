@@ -6,3 +6,4 @@ Flask-CORS
 langgraph
 langchain
 langchain-google-genai
+pydantic

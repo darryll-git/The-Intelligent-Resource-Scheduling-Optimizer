@@ -2,16 +2,112 @@
   {
     "staff_id": "staff_001",
     "max_shifts_per_week": 5,
-    "is_active": true
+    "is_active": true,
+    "skills": [
+      "CPR",
+      "Senior"
+    ],
+    "unavailability_blocks": [
+      {
+        "date": "2026-08-01",
+        "type": "full_day"
+      }
+    ],
+    "max_shifts_per_month": 31
   },
   {
     "staff_id": "staff_002",
     "max_shifts_per_week": 4,
-    "is_active": true
+    "is_active": true,
+    "skills": [
+      "Junior"
+    ],
+    "unavailability_blocks": [],
+    "max_shifts_per_month": 31
   },
   {
     "staff_id": "staff_003",
     "max_shifts_per_week": 5,
-    "is_active": true
+    "is_active": true,
+    "skills": [
+      "CPR",
+      "Junior"
+    ],
+    "unavailability_blocks": [
+      {
+        "date": "2026-08-02",
+        "type": "specific_shifts",
+        "shift_ids": [
+          "night"
+        ]
+      }
+    ],
+    "max_shifts_per_month": 31
+  },
+  {
+    "staff_id": "staff_004",
+    "max_shifts_per_week": 5,
+    "is_active": true,
+    "skills": [
+      "CPR",
+      "Senior"
+    ],
+    "unavailability_blocks": [],
+    "max_shifts_per_month": 31
+  },
+  {
+    "staff_id": "staff_005",
+    "max_shifts_per_week": 5,
+    "is_active": true,
+    "skills": [
+      "CPR",
+      "Junior"
+    ],
+    "unavailability_blocks": [],
+    "max_shifts_per_month": 31
+  },
+  {
+    "staff_id": "staff_006",
+    "max_shifts_per_week": 5,
+    "is_active": true,
+    "skills": [
+      "CPR",
+      "Senior"
+    ],
+    "unavailability_blocks": [],
+    "max_shifts_per_month": 31
+  },
+  {
+    "staff_id": "staff_007",
+    "max_shifts_per_week": 5,
+    "is_active": true,
+    "skills": [
+      "CPR",
+      "Junior"
+    ],
+    "unavailability_blocks": [],
+    "max_shifts_per_month": 31
+  },
+  {
+    "staff_id": "staff_008",
+    "max_shifts_per_week": 5,
+    "is_active": true,
+    "skills": [
+      "CPR",
+      "Senior"
+    ],
+    "unavailability_blocks": [],
+    "max_shifts_per_month": 31
+  },
+  {
+    "staff_id": "staff_009",
+    "max_shifts_per_week": 5,
+    "is_active": true,
+    "skills": [
+      "CPR",
+      "Junior"
+    ],
+    "unavailability_blocks": [],
+    "max_shifts_per_month": 31
   }
 ]

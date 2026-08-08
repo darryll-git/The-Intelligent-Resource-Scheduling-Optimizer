@@ -1,721 +1,1489 @@
 [
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-01",
+    "staff_id": "staff_001",
+    "shift_date": "2026-07-01",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-01",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-01",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-01",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-01",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-01",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-01",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-01",
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-01",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-01",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-02",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-02",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-02",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-02",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-01",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-03",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-02",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-03",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-02",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-02",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-03",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-02",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-02",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-03",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-02",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-02",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-04",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-04",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-04",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-04",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-02",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-05",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-03",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-05",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-03",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-03",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-05",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-03",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-03",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-05",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-03",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-03",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-06",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-06",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-06",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-06",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-03",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-07",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-04",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-07",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-04",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-04",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-07",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-04",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-04",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-07",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-04",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-04",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-08",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-08",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-08",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-08",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-04",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-09",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-05",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-09",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-05",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-05",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-09",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-05",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-05",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-09",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-05",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-05",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-10",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-10",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-10",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-10",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-05",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-11",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-06",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-11",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-06",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-06",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-11",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-06",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-06",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-11",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-06",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-06",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-12",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-12",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-12",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-12",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-06",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-13",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-07",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-13",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-07",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-07",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-13",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-07",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-07",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-13",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-07",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-07",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-14",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-14",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-14",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-14",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-07",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-15",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-08",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-15",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-08",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-08",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-15",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-08",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-08",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-15",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-08",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-08",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-16",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-16",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-16",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-16",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-08",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-17",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-09",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-17",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-09",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-09",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-17",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-09",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-09",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-17",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-09",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-09",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-18",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-18",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-18",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-18",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-09",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-19",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-10",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-19",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-10",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-10",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-19",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-10",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-10",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-19",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-10",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-10",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-20",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-20",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-20",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-20",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-10",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-21",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-11",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-21",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-11",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-11",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-21",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-11",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-11",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-21",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-11",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-11",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-22",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-22",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-22",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-22",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-11",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-23",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-12",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-23",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-12",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-12",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-23",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-12",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-12",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-23",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-12",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-12",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-24",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-24",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-24",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-24",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-12",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-25",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-13",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-25",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-13",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-13",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-25",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-13",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-13",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-25",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-13",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-13",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-26",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-26",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-26",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-26",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-13",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-27",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-14",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-27",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-14",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-14",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-27",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-14",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-14",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-27",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-14",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-14",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-28",
-    "shift_type": "morning",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-28",
-    "shift_type": "afternoon",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-28",
-    "shift_type": "evening",
-    "is_locked": false
-  },
-  {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-28",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-14",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-29",
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-15",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP004",
-    "shift_date": "2026-09-29",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-15",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-15",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP001",
-    "shift_date": "2026-09-29",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-15",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-15",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-29",
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-15",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-15",
     "shift_type": "night",
     "is_locked": false
   },
   {
-    "staff_id": "EMP002",
-    "shift_date": "2026-09-30",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-15",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-16",
     "shift_type": "morning",
     "is_locked": false
   },
   {
-    "staff_id": "EMP003",
-    "shift_date": "2026-09-30",
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-16",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-16",
     "shift_type": "afternoon",
     "is_locked": false
   },
   {
-    "staff_id": "EMP005",
-    "shift_date": "2026-09-30",
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-16",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-16",
     "shift_type": "evening",
     "is_locked": false
   },
   {
-    "staff_id": "EMP006",
-    "shift_date": "2026-09-30",
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-16",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-16",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-16",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-17",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-17",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-17",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-17",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-17",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-17",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-17",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-17",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-18",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-18",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-18",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-18",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-18",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-18",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-18",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-18",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-19",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-19",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-19",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-19",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-19",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-19",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-19",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-19",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-20",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-20",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-20",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-20",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-20",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-20",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-20",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-20",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-21",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-21",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-21",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-21",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-21",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-21",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-21",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-21",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-22",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-22",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-22",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-22",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-22",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-22",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-22",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-22",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-23",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-23",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-23",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-23",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-23",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-23",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-23",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-23",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-24",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-24",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-24",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-24",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-24",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-24",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-24",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-24",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-25",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-25",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-25",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-25",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-25",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-25",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-25",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-25",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-26",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-26",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-26",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-26",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-26",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-26",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-26",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-26",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-27",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-27",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-27",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-27",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-27",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-27",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-27",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-27",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-28",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-28",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-28",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-28",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-28",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-28",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-28",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-28",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-29",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-29",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-29",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-29",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-29",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-29",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-29",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-29",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_002",
+    "shift_date": "2026-07-30",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-30",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-30",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-30",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-30",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-30",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-30",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-30",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_003",
+    "shift_date": "2026-07-31",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_004",
+    "shift_date": "2026-07-31",
+    "shift_type": "morning",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_005",
+    "shift_date": "2026-07-31",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_006",
+    "shift_date": "2026-07-31",
+    "shift_type": "afternoon",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_007",
+    "shift_date": "2026-07-31",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_008",
+    "shift_date": "2026-07-31",
+    "shift_type": "evening",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_001",
+    "shift_date": "2026-07-31",
+    "shift_type": "night",
+    "is_locked": false
+  },
+  {
+    "staff_id": "staff_009",
+    "shift_date": "2026-07-31",
     "shift_type": "night",
     "is_locked": false
   }

@@ -57,3 +57,7 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Generated schedules (Local Mode Output)
+engine/schedule_output.json
+frontend/public/schedule.json

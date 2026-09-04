@@ -10,6 +10,12 @@ payload = {
     "month": 9,
     "year": 2026,
     "days_in_month": 30,
+    "shifts": [
+        {"id": "morning", "name": "Morning", "required_headcount": 1},
+        {"id": "afternoon", "name": "Afternoon", "required_headcount": 1},
+        {"id": "evening", "name": "Evening", "required_headcount": 1},
+        {"id": "night", "name": "Night", "required_headcount": 1, "prohibited_following_shifts": ["morning"]}
+    ],
     "staff_data": [
         {
             "staff_id": "EMP001",
@@ -43,6 +49,30 @@ payload = {
         },
         {
             "staff_id": "EMP006",
+            "max_shifts_per_month": 25,
+            "historical_shift_counts": {"morning": 0, "afternoon": 0, "evening": 0, "night": 0},
+            "preferences": []
+        },
+        {
+            "staff_id": "EMP007",
+            "max_shifts_per_month": 25,
+            "historical_shift_counts": {"morning": 0, "afternoon": 0, "evening": 0, "night": 0},
+            "preferences": []
+        },
+        {
+            "staff_id": "EMP008",
+            "max_shifts_per_month": 25,
+            "historical_shift_counts": {"morning": 0, "afternoon": 0, "evening": 0, "night": 0},
+            "preferences": []
+        },
+        {
+            "staff_id": "EMP009",
+            "max_shifts_per_month": 25,
+            "historical_shift_counts": {"morning": 0, "afternoon": 0, "evening": 0, "night": 0},
+            "preferences": []
+        },
+        {
+            "staff_id": "EMP010",
             "max_shifts_per_month": 25,
             "historical_shift_counts": {"morning": 0, "afternoon": 0, "evening": 0, "night": 0},
             "preferences": []

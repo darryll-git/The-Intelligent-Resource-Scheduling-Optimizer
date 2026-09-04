@@ -7,3 +7,5 @@ langgraph
 langchain
 langchain-google-genai
 pydantic
+fastapi
+uvicorn
